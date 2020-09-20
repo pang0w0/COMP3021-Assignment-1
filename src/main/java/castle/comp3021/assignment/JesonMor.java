@@ -3,6 +3,8 @@ package castle.comp3021.assignment;
 import castle.comp3021.assignment.protocol.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 /**
  * This class extends {@link Game}, implementing the game logic of JesonMor game.
  * Student needs to implement methods in this class to make the game work.
@@ -40,6 +42,9 @@ public class JesonMor extends Game {
         this.refreshOutput();
         while (true) {
             // TODO student implementation starts here
+            currentPlayer = configuration.getPlayers()[0];
+            Move move = currentPlayer.nextMove(this, getAvailableMoves(currentPlayer));
+            //this.refreshOutput();
 
             // student implementation ends here
             if (winner != null) {
@@ -67,6 +72,43 @@ public class JesonMor extends Game {
     @Override
     public Player getWinner(Player lastPlayer, Piece lastPiece, Move lastMove) {
         // TODO student implementation
+        if(lastMove.getSource().x() ==  configuration.getCentralPlace().x() &&
+                lastMove.getSource().y() == configuration.getCentralPlace().y()){
+            return lastPlayer;
+        }
+
+        //checking wether no piece on board
+        boolean curExist = false, lastExist = false;
+        for(int i=0;i<configuration.getSize();i++){
+            for(int j=0;j<configuration.getSize();j++){
+                if(board[i][j].getPlayer().equals(currentPlayer)){
+                    curExist = true;
+                }
+                else if(board[i][j].getPlayer().equals(lastPlayer)){
+                    lastExist = true;
+                }
+            }
+        }
+        if(!lastExist){
+            return currentPlayer;
+        }
+        else if(!curExist){
+            return lastPlayer;
+        }
+
+        //checking whether no move are available
+        if(getAvailableMoves(currentPlayer).length == 0 || getAvailableMoves(lastPlayer).length == 0){
+            if(lastPlayer.getScore() == currentPlayer.getScore()){
+                return currentPlayer;
+            }
+            else if(lastPlayer.getScore() > currentPlayer.getScore()){
+                return currentPlayer;
+            }
+            else{
+                return lastPlayer;
+            }
+        }
+
         return null;
     }
 
@@ -89,6 +131,9 @@ public class JesonMor extends Game {
      */
     public void updateScore(Player player, Piece piece, Move move) {
         // TODO student implementation
+        int addScore = Math.abs(move.getDestination().x() - move.getSource().x()) + Math.abs(move.getDestination().y() - move.getSource().y());
+        int score = player.getScore();
+        player.setScore(score + addScore);
     }
 
 
@@ -109,6 +154,8 @@ public class JesonMor extends Game {
      */
     public void movePiece(@NotNull Move move) {
         // TODO student implementation
+        this.board[move.getDestination().x()][move.getDestination().y()] = this.board[move.getSource().x()][move.getSource().y()];
+        this.board[move.getSource().x()][move.getSource().y()] = null;
     }
 
     /**
@@ -124,6 +171,27 @@ public class JesonMor extends Game {
      */
     public @NotNull Move[] getAvailableMoves(Player player) {
         // TODO student implementation
-        return new Move[0];
+        ArrayList<Move[]> temp = new ArrayList<>();
+
+        for(int i=0;i<configuration.getSize();i++){
+            for(int j=0;j<configuration.getSize();j++){
+                if(board[i][j] != null) {
+                    if (board[i][j].getPlayer().equals(player)) {
+                        temp.add(board[i][j].getAvailableMoves(this, new Place(i, j)));
+                    }
+                }
+            }
+        }
+
+        ArrayList<Move> temp2 = new ArrayList<>();
+        for(int i=0;i<temp.size();i++){
+            for(int j=0;j<temp.get(i).length;j++){
+                temp2.add(temp.get(i)[j]);
+            }
+        }
+
+        Move[] m = new Move[temp2.size()];
+        m = temp2.toArray(m);
+        return m;
     }
 }

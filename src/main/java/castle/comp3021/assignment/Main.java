@@ -27,7 +27,16 @@ public class Main {
      * @return the game object
      */
     public static Game createGame(int size, int numMovesProtection) {
-        // TODO student implementation
+        // TODO student implementation // Done
+        var userPlayer = new ConsolePlayer("UserPlayer");
+        var computerPlayer = new RandomPlayer("ComputerPlayer");
+        Configuration configuration = new Configuration(size, new Player[]{userPlayer, computerPlayer}, numMovesProtection);
+        for(int i=0;i<size;i++){
+            configuration.addInitialPiece(new Knight(userPlayer), i, 0);
+            configuration.addInitialPiece(new Knight(computerPlayer), i, (size-1));
+        }
+        return new JesonMor(configuration);
+        /*
         // The following lines are example of constructing a game object, you may modify them as you wish.
         var userPlayer = new ConsolePlayer("UserPlayer");
         var computerPlayer = new RandomPlayer("ComputerPlayer");
@@ -40,6 +49,7 @@ public class Main {
         // put knight2 at place(1,0) on the gameboard
         configuration.addInitialPiece(knight2, 1, 0);
         return new JesonMor(configuration);
+         */
     }
 
     public static void main(String[] args) {
