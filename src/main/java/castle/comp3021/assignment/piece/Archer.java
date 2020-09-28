@@ -6,6 +6,8 @@ import castle.comp3021.assignment.protocol.Piece;
 import castle.comp3021.assignment.protocol.Place;
 import castle.comp3021.assignment.protocol.Player;
 
+import java.util.ArrayList;
+
 /**
  * Archer piece that moves similar to cannon in chinese chess.
  * Rules of move of Archer can be found in wikipedia (https://en.wikipedia.org/wiki/Xiangqi#Cannon).
@@ -18,7 +20,7 @@ import castle.comp3021.assignment.protocol.Player;
 public class Archer extends Piece {
     public Archer(Player player) {
         super(player);
-        throw new UnsupportedOperationException(); // remove this line if you plan to implement Archer
+        //throw new UnsupportedOperationException(); // remove this line if you plan to implement Archer
     }
 
     @Override
@@ -44,6 +46,95 @@ public class Archer extends Piece {
     @Override
     public Move[] getAvailableMoves(Game game, Place source) {
         // TODO student implementation
-        return new Move[0];
+        var configuration = game.getConfiguration();
+        var size = configuration.getSize();
+        var beforeX = source.x();
+        var beforeY = source.y();
+        ArrayList<Move> temp = new ArrayList<>();
+
+        //north
+        boolean jumped = false;
+        for(int i=beforeY+1;i<size && !jumped;i++){
+            if(game.getPiece(beforeX, i) == null){
+                temp.add(new Move(source, new Place(beforeX, i)));
+            }
+            else{
+                jumped = true;
+                for(int j=i+1;j<size;j++){
+                    if(game.getPiece(beforeX, j) != null){
+                        if((!game.getPiece(beforeX, j).getPlayer().equals(game.getCurrentPlayer())) &&
+                                configuration.getNumMovesProtection() <= game.getNumMoves()){//if it is enemy and not protect
+                            temp.add(new Move(source, new Place(beforeX, j)));
+                        }
+                        break;//break the j for loop
+                    }
+                }
+            }
+        }
+
+        //south
+        jumped = false;
+        for(int i=beforeY-1;i>=0 && !jumped;i--){
+            if(game.getPiece(beforeX, i) == null){
+                temp.add(new Move(source, new Place(beforeX, i)));
+            }
+            else{
+                jumped = true;
+                for(int j=i-1;j>=0;j--){
+                    if(game.getPiece(beforeX, j) != null){
+                        if((!game.getPiece(beforeX, j).getPlayer().equals(game.getCurrentPlayer())) &&
+                                configuration.getNumMovesProtection() <= game.getNumMoves()){//if it is enemy and not protect
+                            temp.add(new Move(source, new Place(beforeX, j)));
+                        }
+                        break;//break the j for loop
+                    }
+                }
+            }
+        }
+
+        //west
+        jumped = false;
+        for(int i=beforeX+1;i<size && !jumped;i++){
+            if(game.getPiece(i, beforeY) == null){
+                temp.add(new Move(source, new Place(i, beforeY)));
+            }
+            else{
+                jumped = true;
+                for(int j=i+1;j<size;j++){
+                    if(game.getPiece(j, beforeY) != null){
+                        if((!game.getPiece(j, beforeY).getPlayer().equals(game.getCurrentPlayer())) &&
+                                configuration.getNumMovesProtection() <= game.getNumMoves()){//if it is enemy and not protect
+                            temp.add(new Move(source, new Place(j, beforeY)));
+                        }
+                        break;//break the j for loop
+                    }
+                }
+            }
+        }
+
+        //east
+        jumped = false;
+        for(int i=beforeX-1;i>=0 && !jumped;i--){
+            if(game.getPiece(i, beforeY) == null){
+                temp.add(new Move(source, new Place(i, beforeY)));
+            }
+            else{
+                jumped = true;
+                for(int j=i-1;j>=0;j--){
+                    if(game.getPiece(j, beforeY) != null){
+                        if((!game.getPiece(j, beforeY).getPlayer().equals(game.getCurrentPlayer())) &&
+                                configuration.getNumMovesProtection() <= game.getNumMoves()){//if it is enemy and not protect
+                            temp.add(new Move(source, new Place(j, beforeY)));
+                        }
+                        break;//break the j for loop
+                    }
+                }
+            }
+        }
+
+        Move[] m = new Move[temp.size()];
+        m = temp.toArray(m);
+
+        return m;
     }
 }

@@ -42,9 +42,21 @@ public class JesonMor extends Game {
         this.refreshOutput();
         while (true) {
             // TODO student implementation starts here
-            currentPlayer = configuration.getPlayers()[0];
+            if (currentPlayer == null){
+                currentPlayer = configuration.getPlayers()[0];
+            }
+            else if(currentPlayer == configuration.getPlayers()[0]){
+                currentPlayer = configuration.getPlayers()[1];
+            }
+            else{
+                currentPlayer = configuration.getPlayers()[0];
+            }
             Move move = currentPlayer.nextMove(this, getAvailableMoves(currentPlayer));
-            //this.refreshOutput();
+            this.movePiece(move);
+            numMoves++;
+            this.refreshOutput();
+            this.updateScore(currentPlayer, board[move.getDestination().x()][move.getDestination().y()], move);
+            winner = this.getWinner(currentPlayer, board[move.getDestination().x()][move.getDestination().y()], move);
 
             // student implementation ends here
             if (winner != null) {
@@ -72,40 +84,47 @@ public class JesonMor extends Game {
     @Override
     public Player getWinner(Player lastPlayer, Piece lastPiece, Move lastMove) {
         // TODO student implementation
-        if(lastMove.getSource().x() ==  configuration.getCentralPlace().x() &&
-                lastMove.getSource().y() == configuration.getCentralPlace().y()){
+        if(configuration.getNumMovesProtection() > numMoves){
+            return null;
+        }
+
+        if(lastMove.getSource().equals(configuration.getCentralPlace()) && lastPiece.getLabel() == 'K'){
             return lastPlayer;
         }
 
         //checking wether no piece on board
-        boolean curExist = false, lastExist = false;
+        boolean nextPlayerPieceExist = false;
         for(int i=0;i<configuration.getSize();i++){
-            for(int j=0;j<configuration.getSize();j++){
-                if(board[i][j].getPlayer().equals(currentPlayer)){
-                    curExist = true;
-                }
-                else if(board[i][j].getPlayer().equals(lastPlayer)){
-                    lastExist = true;
+            for(int j=0;j<configuration.getSize();j++) {
+                if (board[i][j] != null) {
+                    if (!board[i][j].getPlayer().equals(lastPlayer)) {
+                        nextPlayerPieceExist = true;
+                    }
                 }
             }
         }
-        if(!lastExist){
+        if(!nextPlayerPieceExist){
             return currentPlayer;
-        }
-        else if(!curExist){
-            return lastPlayer;
         }
 
         //checking whether no move are available
-        if(getAvailableMoves(currentPlayer).length == 0 || getAvailableMoves(lastPlayer).length == 0){
-            if(lastPlayer.getScore() == currentPlayer.getScore()){
+        Player nextPlayer;
+        if(currentPlayer.equals(configuration.getPlayers()[0])){
+            nextPlayer = configuration.getPlayers()[1];
+        }
+        else{
+            nextPlayer = configuration.getPlayers()[0];
+        }
+
+        if(getAvailableMoves(currentPlayer).length == 0 || getAvailableMoves(nextPlayer).length == 0){
+            if(nextPlayer.getScore() > currentPlayer.getScore()) {
                 return currentPlayer;
             }
-            else if(lastPlayer.getScore() > currentPlayer.getScore()){
-                return currentPlayer;
+            else if(nextPlayer.getScore() == currentPlayer.getScore()){
+                return nextPlayer;
             }
             else{
-                return lastPlayer;
+                return nextPlayer;
             }
         }
 
@@ -172,12 +191,12 @@ public class JesonMor extends Game {
     public @NotNull Move[] getAvailableMoves(Player player) {
         // TODO student implementation
         ArrayList<Move[]> temp = new ArrayList<>();
-
         for(int i=0;i<configuration.getSize();i++){
             for(int j=0;j<configuration.getSize();j++){
                 if(board[i][j] != null) {
                     if (board[i][j].getPlayer().equals(player)) {
                         temp.add(board[i][j].getAvailableMoves(this, new Place(i, j)));
+                        //System.out.println("TEMP:"+temp.get(0)[0]);
                     }
                 }
             }
@@ -185,8 +204,9 @@ public class JesonMor extends Game {
 
         ArrayList<Move> temp2 = new ArrayList<>();
         for(int i=0;i<temp.size();i++){
-            for(int j=0;j<temp.get(i).length;j++){
+            for(int j=temp.get(i).length-1;j>=0;j--){
                 temp2.add(temp.get(i)[j]);
+                //System.out.println("S:"+temp.get(i)[j].getSource()+" D:"+temp.get(i)[j].getDestination());
             }
         }
 

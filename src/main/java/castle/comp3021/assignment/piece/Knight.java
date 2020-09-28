@@ -42,45 +42,121 @@ public class Knight extends Piece {
     @Override
     public Move[] getAvailableMoves(Game game, Place source) {
         // TODO student implementation // Done
-        var c = game.getConfiguration();
-        var size = c.getSize();
+        var size = game.getConfiguration().getSize();
         int x = source.x();
         int y = source.y();
         ArrayList<Move> temp = new ArrayList<>();
 
+        //east
         if(x - 2 >= 0){
-            if(y - 1 >= 0){
-                temp.add(new Move(source, new Place(x-2, y-1)));
-            }
-            if(y + 1 <= (size-1)){
-                temp.add(new Move(source, new Place(x-2, y+1)));
+            if(game.getPiece(x-1,y) == null) {
+                if (y - 1 >= 0) {
+                    if (game.getPiece(x - 2, y - 1) != null) {
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x - 2, y - 1).getPlayer()))) {//the source piece and the destination piece is different player
+                            if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
+                                temp.add(new Move(source, new Place(x - 2, y - 1)));
+                            }
+                        }
+                    } else {
+                        temp.add(new Move(source, new Place(x - 2, y - 1)));
+                    }
+                }
+
+                if (y + 1 < size) {
+                    if (game.getPiece(x - 2, y + 1) != null) {
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x - 2, y + 1).getPlayer()))) {//the source piece and the destination piece is different player
+                            if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
+                                temp.add(new Move(source, new Place(x - 2, y + 1)));
+                            }
+                        }
+                    } else {
+                        temp.add(new Move(source, new Place(x - 2, y + 1)));
+                    }
+                }
             }
         }
 
-        if(x + 2 <= (size-1)){
-            if(y - 1 >= 0){
-                temp.add(new Move(source, new Place(x+2, y-1)));
-            }
-            if(y + 1 <= (size-1)){
-                temp.add(new Move(source, new Place(x+2, y+1)));
+        //west
+        if(x + 2 < size){
+            if(game.getPiece(x+1,y) == null) {
+                if (y - 1 >= 0) {
+                    if (game.getPiece(x + 2, y - 1) != null) {
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x + 2, y - 1).getPlayer()))) {//the source piece and the destination piece is different player
+                            if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
+                                temp.add(new Move(source, new Place(x + 2, y - 1)));
+                            }
+                        }
+                    } else {
+                        temp.add(new Move(source, new Place(x + 2, y - 1)));
+                    }
+                }
+                if (y + 1 < size) {
+                    if (game.getPiece(x + 2, y + 1) != null) {
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x + 2, y + 1).getPlayer()))) {//the source piece and the destination piece is different player
+                            if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
+                                temp.add(new Move(source, new Place(x + 2, y + 1)));
+                            }
+                        }
+                    } else {
+                        temp.add(new Move(source, new Place(x + 2, y + 1)));
+                    }
+                }
             }
         }
 
+        //south
         if(y - 2 >= 0){
-            if(x - 1 >= 0){
-                temp.add(new Move(source, new Place(x-1, y-2)));
-            }
-            if(x + 1 <= (size-1)){
-                temp.add(new Move(source, new Place(x+1, y-2)));
+            if(game.getPiece(x,y-1) == null) {
+                if (x - 1 >= 0) {
+                    if (game.getPiece(x - 1, y - 2) != null) {
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x - 1, y - 2).getPlayer()))) {//the source piece and the destination piece is different player
+                            if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
+                                temp.add(new Move(source, new Place(x - 1, y - 2)));
+                            }
+                        }
+                    } else {
+                        temp.add(new Move(source, new Place(x - 1, y - 2)));
+                    }
+                }
+                if (x + 1 < size) {
+                    if (game.getPiece(x + 1, y - 2) != null) {
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x + 1, y - 2).getPlayer()))) {//the source piece and the destination piece is different player
+                            if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
+                                temp.add(new Move(source, new Place(x + 1, y - 2)));
+                            }
+                        }
+                    } else {
+                        temp.add(new Move(source, new Place(x + 1, y - 2)));
+                    }
+                }
             }
         }
 
-        if(y + 2 <= (size-1)){
-            if(x - 1 >= 0){
-                temp.add(new Move(source, new Place(x-1, y+2)));
-            }
-            if(x + 1 <= (size-1)){
-                temp.add(new Move(source, new Place(x+1, y+2)));
+        //nouth
+        if(y + 2 < size){
+            if(game.getPiece(x,y+1) == null) {
+                if (x - 1 >= 0) {
+                    if (game.getPiece(x - 1, y + 2) != null) {
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x - 1, y + 2).getPlayer()))) {//the source piece and the destination piece is different player
+                            if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
+                                temp.add(new Move(source, new Place(x - 1, y + 2)));
+                            }
+                        }
+                    } else {
+                        temp.add(new Move(source, new Place(x - 1, y + 2)));
+                    }
+                }
+                if (x + 1 < size) {
+                    if (game.getPiece(x + 1, y + 2) != null) {
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x + 1, y + 2).getPlayer()))) {//the source piece and the destination piece is different player
+                            if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
+                                temp.add(new Move(source, new Place(x + 1, y + 2)));
+                            }
+                        }
+                    } else {
+                        temp.add(new Move(source, new Place(x + 1, y + 2)));
+                    }
+                }
             }
         }
 

@@ -48,6 +48,7 @@ public class GameMockPlayerIntegratedTests {
                 new Move(4, 4, 2, 3),
                 new Move(2, 3, 4, 4),
         });
+
         var game = new JesonMor(config);
         var winner = game.start();
         assertEquals(player1, winner);

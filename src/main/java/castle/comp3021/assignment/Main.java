@@ -1,5 +1,6 @@
 package castle.comp3021.assignment;
 
+import castle.comp3021.assignment.piece.Archer;
 import castle.comp3021.assignment.piece.Knight;
 import castle.comp3021.assignment.player.ConsolePlayer;
 import castle.comp3021.assignment.player.RandomPlayer;
@@ -32,8 +33,14 @@ public class Main {
         var computerPlayer = new RandomPlayer("ComputerPlayer");
         Configuration configuration = new Configuration(size, new Player[]{userPlayer, computerPlayer}, numMovesProtection);
         for(int i=0;i<size;i++){
-            configuration.addInitialPiece(new Knight(userPlayer), i, 0);
-            configuration.addInitialPiece(new Knight(computerPlayer), i, (size-1));
+            if(i%2 == 0) {
+                configuration.addInitialPiece(new Knight(userPlayer), i, 0);
+                configuration.addInitialPiece(new Knight(computerPlayer), i, (size - 1));
+            }
+            else{
+                configuration.addInitialPiece(new Archer(userPlayer), i, 0);
+                configuration.addInitialPiece(new Archer(computerPlayer), i, (size - 1));
+            }
         }
         return new JesonMor(configuration);
         /*
