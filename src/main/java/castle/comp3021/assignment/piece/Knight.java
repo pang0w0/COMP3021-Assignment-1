@@ -41,7 +41,7 @@ public class Knight extends Piece {
      */
     @Override
     public Move[] getAvailableMoves(Game game, Place source) {
-        // TODO student implementation // Done
+        //  student implementation // Done
         var size = game.getConfiguration().getSize();
         int x = source.x();
         int y = source.y();
@@ -52,7 +52,8 @@ public class Knight extends Piece {
             if(game.getPiece(x-1,y) == null) {
                 if (y - 1 >= 0) {
                     if (game.getPiece(x - 2, y - 1) != null) {
-                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x - 2, y - 1).getPlayer()))) {//the source piece and the destination piece is different player
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x - 2, y - 1).getPlayer()))) {
+                            //the source piece and the destination piece is different player
                             if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
                                 temp.add(new Move(source, new Place(x - 2, y - 1)));
                             }
@@ -64,7 +65,8 @@ public class Knight extends Piece {
 
                 if (y + 1 < size) {
                     if (game.getPiece(x - 2, y + 1) != null) {
-                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x - 2, y + 1).getPlayer()))) {//the source piece and the destination piece is different player
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x - 2, y + 1).getPlayer()))) {
+                            //the source piece and the destination piece is different player
                             if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
                                 temp.add(new Move(source, new Place(x - 2, y + 1)));
                             }
@@ -81,7 +83,8 @@ public class Knight extends Piece {
             if(game.getPiece(x+1,y) == null) {
                 if (y - 1 >= 0) {
                     if (game.getPiece(x + 2, y - 1) != null) {
-                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x + 2, y - 1).getPlayer()))) {//the source piece and the destination piece is different player
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x + 2, y - 1).getPlayer()))) {
+                            //the source piece and the destination piece is different player
                             if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
                                 temp.add(new Move(source, new Place(x + 2, y - 1)));
                             }
@@ -92,7 +95,8 @@ public class Knight extends Piece {
                 }
                 if (y + 1 < size) {
                     if (game.getPiece(x + 2, y + 1) != null) {
-                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x + 2, y + 1).getPlayer()))) {//the source piece and the destination piece is different player
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x + 2, y + 1).getPlayer()))) {
+                            //the source piece and the destination piece is different player
                             if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
                                 temp.add(new Move(source, new Place(x + 2, y + 1)));
                             }
@@ -109,7 +113,8 @@ public class Knight extends Piece {
             if(game.getPiece(x,y-1) == null) {
                 if (x - 1 >= 0) {
                     if (game.getPiece(x - 1, y - 2) != null) {
-                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x - 1, y - 2).getPlayer()))) {//the source piece and the destination piece is different player
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x - 1, y - 2).getPlayer()))) {
+                            //the source piece and the destination piece is different player
                             if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
                                 temp.add(new Move(source, new Place(x - 1, y - 2)));
                             }
@@ -120,7 +125,8 @@ public class Knight extends Piece {
                 }
                 if (x + 1 < size) {
                     if (game.getPiece(x + 1, y - 2) != null) {
-                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x + 1, y - 2).getPlayer()))) {//the source piece and the destination piece is different player
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x + 1, y - 2).getPlayer()))) {
+                            //the source piece and the destination piece is different player
                             if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
                                 temp.add(new Move(source, new Place(x + 1, y - 2)));
                             }
@@ -137,7 +143,8 @@ public class Knight extends Piece {
             if(game.getPiece(x,y+1) == null) {
                 if (x - 1 >= 0) {
                     if (game.getPiece(x - 1, y + 2) != null) {
-                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x - 1, y + 2).getPlayer()))) {//the source piece and the destination piece is different player
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x - 1, y + 2).getPlayer()))) {
+                            //the source piece and the destination piece is different player
                             if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
                                 temp.add(new Move(source, new Place(x - 1, y + 2)));
                             }
@@ -148,7 +155,8 @@ public class Knight extends Piece {
                 }
                 if (x + 1 < size) {
                     if (game.getPiece(x + 1, y + 2) != null) {
-                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x + 1, y + 2).getPlayer()))) {//the source piece and the destination piece is different player
+                        if (!(game.getPiece(source).getPlayer().equals(game.getPiece(x + 1, y + 2).getPlayer()))) {
+                            //the source piece and the destination piece is different player
                             if (game.getConfiguration().getNumMovesProtection() <= game.getNumMoves()) {
                                 temp.add(new Move(source, new Place(x + 1, y + 2)));
                             }

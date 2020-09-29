@@ -45,7 +45,7 @@ public class Archer extends Piece {
      */
     @Override
     public Move[] getAvailableMoves(Game game, Place source) {
-        // TODO student implementation
+        //  student implementation
         var configuration = game.getConfiguration();
         var size = configuration.getSize();
         var beforeX = source.x();
@@ -57,8 +57,7 @@ public class Archer extends Piece {
         for(int i=beforeY+1;i<size && !jumped;i++){
             if(game.getPiece(beforeX, i) == null){
                 temp.add(new Move(source, new Place(beforeX, i)));
-            }
-            else{
+            } else{
                 jumped = true;
                 for(int j=i+1;j<size;j++){
                     if(game.getPiece(beforeX, j) != null){
@@ -77,8 +76,7 @@ public class Archer extends Piece {
         for(int i=beforeY-1;i>=0 && !jumped;i--){
             if(game.getPiece(beforeX, i) == null){
                 temp.add(new Move(source, new Place(beforeX, i)));
-            }
-            else{
+            } else{
                 jumped = true;
                 for(int j=i-1;j>=0;j--){
                     if(game.getPiece(beforeX, j) != null){
@@ -97,8 +95,7 @@ public class Archer extends Piece {
         for(int i=beforeX+1;i<size && !jumped;i++){
             if(game.getPiece(i, beforeY) == null){
                 temp.add(new Move(source, new Place(i, beforeY)));
-            }
-            else{
+            } else{
                 jumped = true;
                 for(int j=i+1;j<size;j++){
                     if(game.getPiece(j, beforeY) != null){
@@ -117,8 +114,7 @@ public class Archer extends Piece {
         for(int i=beforeX-1;i>=0 && !jumped;i--){
             if(game.getPiece(i, beforeY) == null){
                 temp.add(new Move(source, new Place(i, beforeY)));
-            }
-            else{
+            } else{
                 jumped = true;
                 for(int j=i-1;j>=0;j--){
                     if(game.getPiece(j, beforeY) != null){

@@ -28,7 +28,7 @@ public class Main {
      * @return the game object
      */
     public static Game createGame(int size, int numMovesProtection) {
-        // TODO student implementation // Done
+        //  student implementation // Done
         var userPlayer = new ConsolePlayer("UserPlayer");
         var computerPlayer = new RandomPlayer("ComputerPlayer");
         Configuration configuration = new Configuration(size, new Player[]{userPlayer, computerPlayer}, numMovesProtection);
@@ -36,8 +36,7 @@ public class Main {
             if(i%2 == 0) {
                 configuration.addInitialPiece(new Knight(userPlayer), i, 0);
                 configuration.addInitialPiece(new Knight(computerPlayer), i, (size - 1));
-            }
-            else{
+            } else{
                 configuration.addInitialPiece(new Archer(userPlayer), i, 0);
                 configuration.addInitialPiece(new Archer(computerPlayer), i, (size - 1));
             }

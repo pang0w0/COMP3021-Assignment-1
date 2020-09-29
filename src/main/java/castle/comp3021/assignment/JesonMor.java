@@ -41,14 +41,12 @@ public class JesonMor extends Game {
         this.currentPlayer = null;
         this.refreshOutput();
         while (true) {
-            // TODO student implementation starts here
+            //  student implementation starts here
             if (currentPlayer == null){
                 currentPlayer = configuration.getPlayers()[0];
-            }
-            else if(currentPlayer == configuration.getPlayers()[0]){
+            } else if(currentPlayer == configuration.getPlayers()[0]){
                 currentPlayer = configuration.getPlayers()[1];
-            }
-            else{
+            } else{
                 currentPlayer = configuration.getPlayers()[0];
             }
             Move move = currentPlayer.nextMove(this, getAvailableMoves(currentPlayer));
@@ -83,7 +81,7 @@ public class JesonMor extends Game {
      */
     @Override
     public Player getWinner(Player lastPlayer, Piece lastPiece, Move lastMove) {
-        // TODO student implementation
+        //  student implementation
         if(configuration.getNumMovesProtection() > numMoves){
             return null;
         }
@@ -111,19 +109,16 @@ public class JesonMor extends Game {
         Player nextPlayer;
         if(currentPlayer.equals(configuration.getPlayers()[0])){
             nextPlayer = configuration.getPlayers()[1];
-        }
-        else{
+        } else{
             nextPlayer = configuration.getPlayers()[0];
         }
 
         if(getAvailableMoves(currentPlayer).length == 0 || getAvailableMoves(nextPlayer).length == 0){
             if(nextPlayer.getScore() > currentPlayer.getScore()) {
                 return currentPlayer;
-            }
-            else if(nextPlayer.getScore() == currentPlayer.getScore()){
+            } else if(nextPlayer.getScore() == currentPlayer.getScore()){
                 return nextPlayer;
-            }
-            else{
+            } else{
                 return nextPlayer;
             }
         }
@@ -149,8 +144,9 @@ public class JesonMor extends Game {
      * @param move   the move that is just made
      */
     public void updateScore(Player player, Piece piece, Move move) {
-        // TODO student implementation
-        int addScore = Math.abs(move.getDestination().x() - move.getSource().x()) + Math.abs(move.getDestination().y() - move.getSource().y());
+        //  student implementation
+        int addScore = Math.abs(move.getDestination().x() - move.getSource().x()) +
+                Math.abs(move.getDestination().y() - move.getSource().y());
         int score = player.getScore();
         player.setScore(score + addScore);
     }
@@ -172,7 +168,7 @@ public class JesonMor extends Game {
      * @param move the move to make
      */
     public void movePiece(@NotNull Move move) {
-        // TODO student implementation
+        //  student implementation
         this.board[move.getDestination().x()][move.getDestination().y()] = this.board[move.getSource().x()][move.getSource().y()];
         this.board[move.getSource().x()][move.getSource().y()] = null;
     }
@@ -189,7 +185,7 @@ public class JesonMor extends Game {
      * @return an array of available moves
      */
     public @NotNull Move[] getAvailableMoves(Player player) {
-        // TODO student implementation
+        //  student implementation
         ArrayList<Move[]> temp = new ArrayList<>();
         for(int i=0;i<configuration.getSize();i++){
             for(int j=0;j<configuration.getSize();j++){

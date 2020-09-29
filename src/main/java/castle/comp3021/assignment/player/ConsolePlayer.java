@@ -3,6 +3,8 @@ package castle.comp3021.assignment.player;
 import castle.comp3021.assignment.protocol.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Scanner;
+
 /**
  * The player that makes move according to user input from console.
  */
@@ -40,7 +42,55 @@ public class ConsolePlayer extends Player {
      */
     @Override
     public @NotNull Move nextMove(Game game, Move[] availableMoves) {
-        // TODO student implementation
-        return availableMoves[0];
+        //  student implementation
+        int size = game.getConfiguration().getSize();
+        Scanner sc = new Scanner(System.in);
+        int sourceX, sourceY, destX, destY;
+        while(true) {
+            String temp = sc.nextLine();
+            var input = temp.split("->");
+            if(input.length != 2){
+                System.out.println("invalid input");
+                continue;
+            }
+
+            if(input[0].length() < 2 || input[0].length() > 3 ||
+                    input[1].length() < 2 || input[1].length() > 3){
+                System.out.println("invalid input");
+                continue;
+            }
+
+            sourceX = input[0].charAt(0) - 'a';
+            try {
+                sourceY = Integer.parseInt(input[0].substring(1)) - 1;
+            } catch (NumberFormatException e){
+                System.out.println("invalid input");
+                continue;
+            }
+
+            destX = input[1].charAt(0) - 'a';
+            try{
+                destY = Integer.parseInt(input[1].substring(1)) - 1;
+            } catch (NumberFormatException e){
+                System.out.println("invalid input");
+                continue;
+            }
+
+
+            if(sourceX >= size || sourceX < 0 || sourceY >= size || sourceY < 0 ||
+                    destX >= size || destX < 0 || destY >= size || destY < 0){
+                System.out.println("invalid input");
+                continue;
+            }
+
+            var m = new Move(sourceX, sourceY, destX, destY);
+            for(var x : availableMoves){
+                if(x.equals(m)){
+                    return m;
+                }
+            }
+
+            System.out.println("invalid input");
+        }
     }
 }
