@@ -8,13 +8,8 @@ import castle.comp3021.assignment.protocol.*;
 import castle.comp3021.assignment.util.Compares;
 import castle.comp3021.assignment.util.OptionalArcherImplementation;
 import castle.comp3021.assignment.util.SampleTest;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
